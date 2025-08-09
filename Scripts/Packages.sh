@@ -119,3 +119,11 @@ UPDATE_VERSION() {
 #UPDATE_VERSION "软件包名" "测试版，true，可选，默认为否"
 UPDATE_VERSION "sing-box"
 #UPDATE_VERSION "tailscale"
+# 在所有包处理完成后，对 smartdns 进行特殊处理
+# 查找 smartdns 目录并优化 Makefile
+SMARTDNS_DIR=$(find . -type d -name "smartdns" | head -n 1)
+if [ -n "$SMARTDNS_DIR" ] && [ -f "$SMARTDNS_DIR/Makefile" ]; then
+	echo "Optimizing smartdns Makefile for smartdns-ui compilation..."
+	sed -i '/define Build\/Compile\/smartdns-ui/,/endef/s/CC=\$(TARGET_CC)/CC="\$(TARGET_CC_NOCACHE)"/' "$SMARTDNS_DIR/Makefile"
+	echo "Applied smartdns-ui optimization to $SMARTDNS_DIR/Makefile"
+fi
