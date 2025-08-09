@@ -59,7 +59,7 @@ env:
 jobs:
   core:
     name: ${{inputs.WRT_SOURCE}}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Projects
         uses: actions/checkout@main
@@ -80,8 +80,8 @@ jobs:
           sudo -E timedatectl set-timezone "Asia/Shanghai"
 
           # 安装最新版 Node.js 以支持 SmartDNS WebUI 编译
-          #curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash -
-          #sudo -E apt -yqq install nodejs
+          curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash -
+          sudo -E apt -yqq install nodejs
 
           sudo mkdir -p /mnt/build_wrt
           sudo chown $USER:$USER /mnt/build_wrt
